@@ -16,13 +16,7 @@ class Main {
 	private static $check;
 
 	public function __construct($otpions = []) {
-		// init database
-		if($otpions['fresh_db']) {
-			@unlink('data/pes2018.db');
-		}
-		DB::getInstance()->connect('data/pes2018.db')->exec(file_get_contents('data/pes2018.sql'));
 		$this->check = DB::getInstance()->prepare('SELECT count(*) FROM players WHERE id = ?;');
-		HttpClient::getInstance()->init('http://pesdb.net');
 	}
 
 	public function index() {
@@ -35,7 +29,7 @@ class Main {
 				SignalHandler::dispatch();
 				$response = HttpClient::getInstance()->request('/pes2018/?page='.$page);
 				sleep(self::REQUEST_CD);
-				if(!preg_match('|<div class="pages">.*<a href="\./\?page=\d+">(\d+)</a>\..*</div>|isU', $response, $match_page)) {
+				if(!preg_match('|<div class="pages">.*<a href="\./\?page=\d+".*>(\d+)</a>\..*</div>|isU', $response, $match_page)) {
 					throw new \RuntimeException('page no not found.', 1);
 				}
 				$lastpage = intval($match_page[1]);

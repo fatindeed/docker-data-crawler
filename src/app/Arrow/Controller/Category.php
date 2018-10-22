@@ -4,7 +4,7 @@ namespace App\Arrow\Controller;
 
 use App\Core\HttpClient;
 
-class Category extends AbstractController {
+class Category {
 
 	public function getAll() {
 		$response = HttpClient::getInstance()->request('/zh-cn/product-category-sitemap');

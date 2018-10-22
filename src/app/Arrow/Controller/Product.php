@@ -4,13 +4,12 @@ namespace App\Arrow\Controller;
 
 use App\Core\HttpClient;
 
-class Product extends AbstractController {
+class Product {
 
 	private $perPage = 100;
 	private $limit = 0;
 
 	public function __construct($otpions = []) {
-		parent::__construct($otpions);
 		if($otpions['limit'] > 0) {
 			$this->limit = $otpions['limit'];
 		}

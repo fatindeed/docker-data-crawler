@@ -15,4 +15,14 @@ class Loader extends \App\Core\Loader {
 		'dumpLogo' => [__NAMESPACE__.'\\Controller\\Dumper', 'logo'],
 	];
 
+	public function __construct($otpions) {
+		// init database
+		if($otpions['fresh_db']) {
+			@unlink('data/demo.db');
+		}
+		DB::getInstance()->connect('data/demo.db')->exec(file_get_contents('data/arrow.sql'));
+		HttpClient::getInstance()->init('https://www.arrow.com');
+		$this->otpions = $otpions;
+	}
+
 }

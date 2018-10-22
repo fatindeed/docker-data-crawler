@@ -5,10 +5,9 @@ namespace App\Arrow\Controller;
 use App\Core\DB;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class Dumper extends AbstractController {
+class Dumper {
 
 	public function __construct($otpions = []) {
-		parent::__construct($otpions);
 		// init database
 		$dbh = DB::getInstance();
 		$this->countByManufacturer = $dbh->prepare('SELECT count(*) FROM parts WHERE manufacturer_id = ?;');

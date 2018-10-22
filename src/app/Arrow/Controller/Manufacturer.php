@@ -2,7 +2,7 @@
 
 namespace App\Arrow\Controller;
 
-class Manufacturer extends AbstractController {
+class Manufacturer {
 
 	public function getAll() {
 		parent::mkdir(\App\Model\Manufacturer::LOGO_DIR);
