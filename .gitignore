@@ -1,0 +1,17 @@
+# Windows
+[Dd]esktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Project
+docker-compose.yml
+/src/data/
+/src/vendor/
+/src/composer.lock
