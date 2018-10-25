@@ -92,11 +92,18 @@ class OneClickLogin {
 }
 
 return new OneClickLogin([
-	'db' => array(
+	'arrow' => array(
 		'username'  => '',
 		'pass'      => '123456',
 		'databases' => array(
 			'/data/demo.db' => '/data/demo.db'
+		)
+	),
+	'pes2018' => array(
+		'username'  => '',
+		'pass'      => '123456',
+		'databases' => array(
+			'/data/pes2018.db' => '/data/pes2018.db'
 		)
 	),
 ], 'sqlite');
