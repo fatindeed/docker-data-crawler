@@ -27,7 +27,7 @@ class Main {
 		do {
 			try {
 				SignalHandler::dispatch();
-				$response = HttpClient::getInstance()->request('/pes2018/?page='.$page);
+				$response = HttpClient::getInstance()->request('/pes2019/?featured=0&page='.$page);
 				sleep(self::REQUEST_CD);
 				if(!preg_match('|<div class="pages">.*<a href="\./\?page=\d+".*>(\d+)</a>\..*</div>|isU', $response, $match_page)) {
 					throw new \RuntimeException('page no not found.', 1);
@@ -75,7 +75,7 @@ class Main {
 	private function get_player($id) {
 		$this->check->execute([$id]);
 		if($this->check->fetchColumn() > 0) return true;
-		$response = HttpClient::getInstance()->request('/pes2018/?id='.$id);
+		$response = HttpClient::getInstance()->request('/pes2019/?id='.$id);
 		if(!preg_match('|<table id="table_0" class="player" style="display: table; clear: both;">(.*)</table>|isU', $response, $match_info)) {
 			throw new \RuntimeException('player info table not found.', 1);
 		}
@@ -83,6 +83,7 @@ class Main {
 			throw new \RuntimeException('player info rows not found.', 1);
 		}
 		$data = array_map('strip_tags', $match_data[1]);
+		// var max_level = 44;
 		array_unshift($data, $id);
 		if(count($data) == 12) {
 			array_splice($data, 2, 0, [NULL]);
@@ -95,6 +96,7 @@ class Main {
 		}
 		$abilities = json_decode(trim($match_abilities[1]));
 		$ability_data = array_map(array('self', 'get_lv30_value'), $abilities);
+		print_r($ability_data);exit();
 		array_unshift($ability_data, $id);
 		$ability_data[] = json_encode($abilities);
 		if(!preg_match('|<table class="playing_styles">(.*)</table>|isU', $response, $match_playing_styles)) {
@@ -103,6 +105,11 @@ class Main {
 		if(!preg_match_all('|<tr>(.*)</tr>|isU', $match_playing_styles[1], $match_lines)) {
 			throw new \RuntimeException('players style rows not found.', 1);
 		}
+		// Featured Players
+		// <td style="vertical-align: bottom;">
+		//   <div style="text-align: center;"><a href="./?all=1&amp;featured=69">ARSENAL Club Selection</a></div>
+		//   <img src="images/players/40323.png" class="player_image" alt="" />
+		// </td>
 		$playing_styles = [];
 		$category = '';
 		foreach($match_lines[1] as $match_line) {
